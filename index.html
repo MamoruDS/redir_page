@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<head>
+    <title>Redirect</title>
+</head>
+<style>
+    :root {
+        --fg-main: #3f3f3f;
+        --bg-main: #eeeeee;
+        --fg-highlight: #ffffff;
+        --highlight-hsl: 0, 67%, 74%;
+        --bg-highlight: hsla(var(--highlight-hsl), 0.55);
+        --bs-highlight: hsla(var(--highlight-hsl), 0.25);
+    }
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --fg-main: #e4e4e4;
+            --bg-main: #1a1a1c;
+            --bg-highlight: hsla(var(--highlight-hsl), 0.45);
+            --bs-highlight: hsla(var(--highlight-hsl), 0.15);
+        }
+    }
+    * {
+        margin: 0 0 0 0;
+        padding: 0 0 0 0;
+        color: var(--fg-main);
+        font-family: Arial, Helvetica, sans-serif;
+    }
+    body {
+        background-color: var(--bg-main);
+    }
+    .ctr {
+        position: fixed;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+        flex-wrap: wrap;
+        height: 100%;
+        width: 100%;
+    }
+    .ctr > span {
+        flex-shrink: 0;
+    }
+    span {
+        position: relative;
+        font-size: 1.75rem;
+        width: fit-content;
+    }
+    #redir_url {
+        padding: 0.15rem 0.4rem 0.15rem 0.4rem;
+        color: var(--fg-highlight);
+        background-color: var(--bg-highlight);
+        box-shadow: 0 0.25rem 0.95rem 0.2rem var(--bs-highlight);
+    }
+</style>
+
+<body>
+    <div class="ctr">
+        <span id="redir_prefix">
+            redirect to&nbsp;
+        </span>
+        <span id="redir_url"> </span>
+    </div>
+</body>
+
+<script>
+    const params = new URLSearchParams(window.location.search)
+
+    if (params.has('redir')) {
+        const _url = params.get('redir')
+        document.getElementById(
+            'redir_url'
+        ).innerHTML = /(^[\w.]{1,})(.+)/.exec(_url)[1]
+        window.location.replace(_url)
+    }
+
+    const style = document.createElement('style')
+    const _hue = parseInt(Math.random() * 360)
+    style.type = 'text/css'
+    style.id = 'style_random'
+    style.innerHTML = `
+        :root {
+            --highlight-hsl: ${_hue}, 67%, 65%;
+        }
+    `
+    document.body.appendChild(style)
+</script>
