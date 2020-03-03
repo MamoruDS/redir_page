@@ -43,6 +43,8 @@
     }
     span {
         position: relative;
+        margin-left: 0.2rem;
+        margin-right: 0.2rem;
         font-size: 1.75rem;
         width: fit-content;
     }
@@ -79,12 +81,12 @@
 
     if (params.has('redir')) {
         let _url = params.get('redir')
-        if (_url.match(/\w{1,}:\/\//) === null) {
-            _url = `http://${_url}`
-        }
         document.getElementById(
             'redir_url'
         ).innerHTML = /(^[\w.]{1,})(.+)/.exec(_url)[1]
+        if (_url.match(/\w{1,}:\/\//) === null) {
+            _url = `http://${_url}`
+        }
         window.location.replace(_url)
     }
 </script>
