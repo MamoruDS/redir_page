@@ -64,16 +64,6 @@
 </body>
 
 <script>
-    const params = new URLSearchParams(window.location.search)
-
-    if (params.has('redir')) {
-        const _url = params.get('redir')
-        document.getElementById(
-            'redir_url'
-        ).innerHTML = /(^[\w.]{1,})(.+)/.exec(_url)[1]
-        window.location.replace(_url)
-    }
-
     const style = document.createElement('style')
     const _hue = parseInt(Math.random() * 360)
     style.type = 'text/css'
@@ -84,4 +74,17 @@
         }
     `
     document.body.appendChild(style)
+
+    const params = new URLSearchParams(window.location.search)
+
+    if (params.has('redir')) {
+        let _url = params.get('redir')
+        if (_url.match(/\w{1,}:\/\//) === null) {
+            _url = `http://${_url}`
+        }
+        document.getElementById(
+            'redir_url'
+        ).innerHTML = /(^[\w.]{1,})(.+)/.exec(_url)[1]
+        window.location.replace(_url)
+    }
 </script>
