@@ -9,7 +9,7 @@ type _RedirRec = {
     ua_excludes?: string[] // regex patterns
     require_token?: boolean
     tokens?: _Token[]
-    enable?: boolean
+    enabled: boolean
 }
 
 class NotFoundError extends Error {
@@ -65,7 +65,7 @@ class RedirKV {
             throw new NotFoundError(key)
         }
         const rec = JSON.parse(val) as _RedirRec
-        if (!rec.enable) {
+        if (!rec.enabled) {
             return null
         }
         if (this._isExcludeUA(header, rec.ua_excludes || [])) {
