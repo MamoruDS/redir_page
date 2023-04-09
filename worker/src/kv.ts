@@ -15,7 +15,7 @@ type _RedirRec = {
 class NotFoundError extends Error {
     public key: string
     constructor(key: string) {
-        super(`key '${key}' not found`)
+        super(`Redir target with key='${key}' not found`)
         this.key = key
     }
 }
