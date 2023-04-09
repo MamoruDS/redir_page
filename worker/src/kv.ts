@@ -1,3 +1,5 @@
+import * as YAML from 'yaml'
+
 type _Token = {
     value: string
     expire: number // -1 for never expire
@@ -64,7 +66,7 @@ class RedirKV {
         if (val === null) {
             throw new NotFoundError(key)
         }
-        const rec = JSON.parse(val) as _RedirRec
+        const rec: _RedirRec = YAML.parse(val)
         if (!rec.enabled) {
             return null
         }
