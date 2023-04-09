@@ -22,6 +22,14 @@ class NotFoundError extends Error {
     }
 }
 
+class BadPatternError extends Error {
+    public pattern: string
+    constructor(pattern: string) {
+        super(`Bad pattern: ${pattern}`)
+        this.pattern = pattern
+    }
+}
+
 class RedirKV {
     private _kv: KVNamespace
     constructor(kv: KVNamespace) {
@@ -34,8 +42,16 @@ class RedirKV {
     ): boolean => {
         const ua = header.get('User-Agent') || ''
         for (const pattern of ua_includes) {
-            if (ua.match(pattern)) {
-                return true
+            try {
+                const re = new RegExp(pattern)
+                if (ua.match(re)) {
+                    return true
+                }
+            } catch (e) {
+                if (e instanceof SyntaxError) {
+                    throw new BadPatternError(pattern)
+                }
+                throw e
             }
         }
         return false
@@ -83,4 +99,4 @@ class RedirKV {
     }
 }
 
-export { RedirKV, NotFoundError }
+export { BadPatternError, RedirKV, NotFoundError }
