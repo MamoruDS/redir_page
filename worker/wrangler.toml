@@ -1,2 +1,6 @@
 name = "redir"
 main = "src/index.ts"
+
+kv_namespaces = [
+    { bingding = "KV_REDIR", id = "" },
+]
