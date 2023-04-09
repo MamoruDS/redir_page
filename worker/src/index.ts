@@ -1,7 +1,7 @@
 import { Env } from './env'
 import { getRedirTarget, getRedirUrl } from './handle'
 import { NotFoundError } from './kv'
-import { respRedir, resp404 } from './utils'
+import { respRedir, respPanic } from './utils'
 
 export default {
     async fetch(
@@ -15,13 +15,13 @@ export default {
             if (redirUrl !== null) {
                 return respRedir(redirUrl)
             } else {
-                return resp404('Redir target not found')
+                return respPanic('Redir target not found', 404)
             }
-        } catch (e) {
-            if (e instanceof NotFoundError) {
-                return resp404(e.message)
+        } catch (err) {
+            if (err instanceof NotFoundError) {
+                return respPanic(err, 404)
             }
-            throw e
+            throw err
         }
     },
 }

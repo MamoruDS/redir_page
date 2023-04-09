@@ -2,8 +2,11 @@ const respRedir = (redirUrl: string): Response => {
     return Response.redirect(redirUrl, 302)
 }
 
-const resp404 = (message: string): Response => {
-    return new Response(message, { status: 404 })
+const respPanic = (e: Error | string, code: number): Response => {
+    const msg = typeof e === 'string' ? e : e.message || e.toString()
+    return new Response(msg || `Unknown error`, {
+        status: code,
+    })
 }
 
-export { respRedir, resp404 }
+export { respRedir, respPanic }
