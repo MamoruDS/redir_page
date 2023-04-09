@@ -1,6 +1,6 @@
 import { Env } from './env'
 import { getRedirTarget, getRedirUrl } from './handle'
-import { NotFoundError } from './kv'
+import { BadPatternError, NotFoundError } from './kv'
 import { respRedir, respPanic } from './utils'
 
 export default {
@@ -20,6 +20,9 @@ export default {
         } catch (err) {
             if (err instanceof NotFoundError) {
                 return respPanic(err, 404)
+            }
+            if (err instanceof BadPatternError) {
+                return respPanic(err, 500)
             }
             throw err
         }

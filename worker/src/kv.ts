@@ -25,7 +25,7 @@ class NotFoundError extends Error {
 class BadPatternError extends Error {
     public pattern: string
     constructor(pattern: string) {
-        super(`Bad pattern: ${pattern}`)
+        super(`Failed to parse user defined pattern: ${pattern}`)
         this.pattern = pattern
     }
 }
