@@ -1,6 +1,7 @@
 name = "redir"
 main = "src/index.ts"
+compatibility_date = "2023-04-09"
 
 kv_namespaces = [
-    { bingding = "KV_REDIR", id = "" },
+    { binding = "KV_REDIR", id = "", preview_id = "" },
 ]
